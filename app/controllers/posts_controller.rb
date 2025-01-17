@@ -15,6 +15,7 @@ class PostsController < ApplicationController
     # これはsubmitボタンを押した時に自動で呼ばれる
     def create
       @post = Post.new(post_params)
+      # このsaveメソッドはPostモデルの親クラスであるActiveRecord::Baseクラスのメソッド
       if @post.save
         redirect_to posts_path
       else
@@ -26,6 +27,8 @@ class PostsController < ApplicationController
     private
 
     def post_params
+      # このparamsにはクエリパラメータだけでなく、リクエストボディの情報も含まれている
+      # ここでは、postというキーに紐づく値のうち、titleとcontentだけを取り出している
       params.require(:post).permit(:title, :content)
     end
 end
