@@ -1,0 +1,8 @@
+<h1>編集</h1>
+
+<%# fomr_withはフォームヘルパー https://railsguides.jp/form_helpers.html %>
+<%= form_with model: @post, html: {class: "form-container"} do |form| %>
+<div class="form-input"><%= form.label :title%> <%= form.text_field :title%></div>
+<div class="form-input"> <%= form.label :content%> <%= form.text_area :content%></div>
+<div class="form-container"><%= form.submit "更新", html: {class: "link-button"} %></div>
+<% end %>

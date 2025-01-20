@@ -23,6 +23,28 @@ class PostsController < ApplicationController
       end
     end
 
+    # viewのedit.html.erbと紐づく
+    def edit
+      @post = Post.find(params[:id])
+    end
+
+    # これはsubmitボタンを押した時に自動で呼ばれる
+    def update
+        @post = Post.find(params[:id])
+        if @post.update(post_params)
+            redirect_to posts_path
+        else
+            render :edit
+        end
+    end
+
+    # deleteメソッドが呼ばれた時に自動で呼ばれる
+    def destroy
+        @post = Post.find(params[:id])
+        @post.destroy
+        redirect_to posts_path
+    end
+
     # privateをつけると、このクラス内でしかそれ以降のコードは呼び出せない
     private
 
