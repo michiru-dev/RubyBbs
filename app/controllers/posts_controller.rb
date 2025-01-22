@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+    # このコントローラーのedit, update, destroyアクションが呼ばれる前にset_postメソッドが呼ばれる
+    before_action :set_post, only: [ :edit, :update, :destroy ]
+
     # viewのindex.html.erbと紐づく
     def index
         # @postはインスタンス変数で、ビューで使える
@@ -25,12 +28,10 @@ class PostsController < ApplicationController
 
     # viewのedit.html.erbと紐づく
     def edit
-      @post = Post.find(params[:id])
     end
 
     # これはsubmitボタンを押した時に自動で呼ばれる
     def update
-        @post = Post.find(params[:id])
         if @post.update(post_params)
             redirect_to posts_path
         else
@@ -40,7 +41,6 @@ class PostsController < ApplicationController
 
     # deleteメソッドが呼ばれた時に自動で呼ばれる
     def destroy
-        @post = Post.find(params[:id])
         @post.destroy
         redirect_to posts_path
     end
@@ -52,5 +52,9 @@ class PostsController < ApplicationController
       # このparamsにはクエリパラメータだけでなく、リクエストボディの情報も含まれている
       # ここでは、postというキーに紐づく値のうち、titleとcontentだけを取り出している
       params.require(:post).permit(:title, :content)
+    end
+
+    def set_post
+      @post = Post.find(params[:id])
     end
 end
